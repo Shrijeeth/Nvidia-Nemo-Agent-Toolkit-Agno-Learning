@@ -60,6 +60,9 @@ install_dependencies:
 install_1:
 	uv pip install -e 1_First_NAT_Workflow
 
+validate_1:
+	nat validate --config_file 1_First_NAT_Workflow/src/configs/config.yml
+
 run_1_1:
 	nat run --config_file 1_First_NAT_Workflow/src/configs/config.yml --input "What is the difference between weather and climate?"
 

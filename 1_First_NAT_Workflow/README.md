@@ -1,54 +1,80 @@
 # First NAT Workflow (Climate Agent)
 
-This module is a guided learning exercise for the NVIDIA NeMo Agent Toolkit (NAT). It shows how to wire the AGNO builder, configure an LLM, and expose the workflow through the CLI and FastAPI surface.
+Build a minimal climate-focused agent, run it via the NAT CLI, and serve the exact same configuration as a REST API so external clients (or the NeMo UI) can call it.
 
-## Learning objectives
+---
 
-- Understand how NAT functions are declared (`climate_agent_function.py`).
-- See how configs describe LLMs/tools (`src/configs/config.yml`).
-- Practice running NAT both via CLI (`nat run`) and service (`nat serve`).
-- Capture API interactions with lightweight integration tests.
+## Lesson beats
+
+1. **Create a minimal workflow**
+   - Author `src/configs/config.yml` with two sections: `llms` (our `climate_llm` NIM endpoint) and `workflow` (the AGNO function we register).
+   - Implement `climate_agent_function.py` to fetch the LLM, apply a climate-specific system prompt, and expose `_arun` so NAT can execute it.
+
+2. **Run it with NAT CLI**
+   - `nat run --config_file ... --input "What is the difference between weather and climate?"`
+   - Repeat with additional prompts to see deterministic vs knowledge-limited responses.
+
+3. **Serve it as an API**
+   - `nat serve --config_file ...` hosts FastAPI on `localhost:8000`.
+   - Use `requests` or the provided pytest to call `/generate`, `/chat`, `/v1/chat/completions`.
+
+4. **(optional) Connect a UI**
+   - Any OpenAI-compatible chat UI can talk to `/v1/chat/completions`.
+   - Try the NeMo Agent Toolkit UI manager or wire up your own frontend.
+
+5. **Inspect limitations**
+   - Because this workflow is “LLM-only”, answers rely solely on model training data.
+   - Follow-up lessons should add tools/retrievers to ground outputs with real climate data.
+
+---
 
 ## Prerequisites
 
 From the repo root:
 
 ```bash
-make install_dependencies
-make install_1
+make install_dependencies   # installs uv
+make install_1              # editable install of this workflow
+make validate_1             # optional: nat validate --config_file ...
 ```
 
-Ensure `.env` is populated and loaded (see root README for details).
+Ensure `.env` is populated + exported (see root README).
+
+---
 
 ## Workflow anatomy
 
 | Component | Purpose |
 |-----------|---------|
-| `pyproject.toml` | Defines the package and entry-point used by `nat` |
-| `src/climate_agent/climate_agent_function.py` | Implements the AGNO-based function |
-| `src/configs/config.yml` | Declares the workflow + LLM references |
-| `tests/integration_tests/test_api.py` | Exercises HTTP endpoints and prints responses |
+| `pyproject.toml` | Declares package metadata + entry-point so NAT discovers the function |
+| `src/climate_agent/climate_agent_function.py` | Defines `ClimateAgentFunctionConfig` + AGNO agent |
+| `src/configs/config.yml` | Minimal YAML describing LLM and workflow wiring |
+| `tests/integration_tests/test_api.py` | Hits REST endpoints and prints raw responses |
 
-## Running the workflow
+---
 
-```bash
-make run_1_1  # sample question 1
-make run_1_2  # sample question 2
-make run_1_3  # sample question 3
-make serve_1  # start FastAPI server (required for integration tests)
-```
-
-## Integration tests
-
-The tests hit a running server on `localhost:8000` and print full responses:
+## Hands-on steps
 
 ```bash
-make test_api_1
+make run_1_1  # Ask: “What is the difference between weather and climate?”
+make run_1_2  # Ask: “How much has global average temperature increased…?”
+make run_1_3  # Ask a harder data-heavy question
+make serve_1  # Start REST API on localhost:8000
+make test_api_1  # GET printed JSON from /generate, /chat, /v1/chat/completions
 ```
 
-## Configuration
+While `nat serve` is running you can also hit the endpoints manually:
 
-- Workflow entry point: `climate_agent_function` defined in `src/climate_agent`.
-- Primary config: `src/configs/config.yml`. Adjust LLM/tool references or prompts to observe changes.
+```bash
+curl -X POST http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"What causes El Niño?"}]}'
+```
 
-Feel free to duplicate this folder to create additional learning modules (e.g., add tools, streaming, or multi-agent orchestrations).
+---
+
+## Next lesson teaser
+
+- Add tools / retrieval (e.g., NOAA datasets) so the agent stops hallucinating numbers.
+- Introduce `nat optimize` / `nat eval` to tighten prompts and monitor quality.
+- Hook up the official NeMo Agent Toolkit UI for a richer chat experience.
