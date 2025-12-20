@@ -7,6 +7,12 @@ llms:
     temperature: 0.7
     max_tokens: 2048
 
+functions:
+  simple_calculate_statistics:
+    _type: climate_agent/simple_calculate_statistics
+    description: "Calculate temperature statistics globally or for a specific country"
+
 workflow:
   _type: climate_agent/climate_agent
   llm_name: climate_llm
+  tools: [simple_calculate_statistics]

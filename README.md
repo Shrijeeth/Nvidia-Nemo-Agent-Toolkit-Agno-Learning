@@ -41,7 +41,7 @@ Each folder in this repo represents a milestone in that journey, starting with a
 
 | Folder | Description |
 |--------|-------------|
-| `1_First_NAT_Workflow/` | Build & serve a minimal climate agent (LLM-only) |
+| `1_Climate_Agent_Workflow/` | Build & serve a minimal climate agent (LLM-only) |
 | `scripts/` | Utility helpers (env management, etc.) |
 | `Makefile` | Convenience targets: install, validate, run, serve, test |
 
@@ -66,7 +66,7 @@ Need to see API output? Run `make serve_1` in one terminal and `make test_api_1`
 
 ## Ready for the next video?
 
-- [Lesson 1 README](1_First_NAT_Workflow/README.md): run your first NAT agent and serve it.
+- [Lesson 1 README](1_Climate_Agent_Workflow/README.md): run your first NAT agent and serve it.
 - Upcoming folders: add tools, integrate retrievers, inspect telemetry, plug in evaluators, and connect the official NeMo Agent Toolkit UI.
 
 Let’s turn that 60% demo into a production-ready climate assistant.

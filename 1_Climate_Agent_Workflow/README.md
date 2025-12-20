@@ -1,4 +1,4 @@
-# First NAT Workflow (Climate Agent)
+# Climate Agent Workflow
 
 Build a minimal climate-focused agent, run it via the NAT CLI, and serve the exact same configuration as a REST API so external clients (or the NeMo UI) can call it.
 

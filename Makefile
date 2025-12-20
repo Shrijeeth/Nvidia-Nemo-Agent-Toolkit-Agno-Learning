@@ -58,22 +58,25 @@ install_dependencies:
 	pip install uv
 
 install_1:
-	uv pip install -e 1_First_NAT_Workflow
+	uv pip install -e 1_Climate_Agent_Workflow
 
 validate_1:
-	nat validate --config_file 1_First_NAT_Workflow/src/configs/config.yml
+	nat validate --config_file 1_Climate_Agent_Workflow/src/configs/config.yml
 
 run_1_1:
-	nat run --config_file 1_First_NAT_Workflow/src/configs/config.yml --input "What is the difference between weather and climate?"
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "What is the difference between weather and climate?"
 
 run_1_2:
-	nat run --config_file 1_First_NAT_Workflow/src/configs/config.yml --input "How much has global average temperature increased since pre-industrial times?"
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "How much has global average temperature increased since pre-industrial times?"
 
 run_1_3:
-	nat run --config_file 1_First_NAT_Workflow/src/configs/config.yml --input "What were the exact temperature anomalies for the top 5 warmest countries in 2023?"
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "What were the exact temperature anomalies for the top 5 warmest countries in 2023?"
+
+run_1_4:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "What is the global temperature trend per decade?"
 
 serve_1:
-	nat serve --config_file 1_First_NAT_Workflow/src/configs/config.yml
+	nat serve --config_file 1_Climate_Agent_Workflow/src/configs/config.yml
 
 test_api_1:
-	pytest -s 1_First_NAT_Workflow/tests/integration_tests/test_api.py
+	pytest -s 1_Climate_Agent_Workflow/tests/integration_tests/test_api.py

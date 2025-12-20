@@ -1,0 +1,15 @@
+{
+  "data_description": "GHCN-Monthly temperature data subset for educational purposes",
+  "source": "NOAA National Centers for Environmental Information",
+  "license": "Public Domain (U.S. Government Work)",
+  "stations": 29,
+  "countries": 10,
+  "years": "1950-2025",
+  "monthly_records": 13132,
+  "annual_records": 1210,
+  "files": {
+    "temperature_monthly.csv": "Monthly temperature data with station information",
+    "temperature_annual.csv": "Annual average temperatures by station",
+    "stations.csv": "Station metadata (location, elevation, etc.)"
+  }
+}
