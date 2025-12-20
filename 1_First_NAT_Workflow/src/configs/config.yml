@@ -1,0 +1,12 @@
+llms:
+  climate_llm:
+    _type: nim
+    model_name: meta/llama-3.1-70b-instruct
+    base_url: ${NVIDIA_BASE_URL}
+    api_key: ${NVIDIA_API_KEY}
+    temperature: 0.7
+    max_tokens: 2048
+
+workflow:
+  _type: climate_agent/climate_agent
+  llm_name: climate_llm
