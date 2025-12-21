@@ -66,6 +66,18 @@ run_1_3:
 run_1_4:
 	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "What is the global temperature trend per decade?"
 
+run_1_5:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "Compare the temperature trends of Canada and Brazil. Which one is warming faster? Also create a visualization of global trends."
+
+run_1_6:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "Create a visualization showing which countries have the highest warming trends."
+
+run_1_7:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "What is the global temperature trend per decade?"
+
+run_1_8:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "Tell me about France's climate data. How many stations does it have and what's the temperature trend?"
+
 serve_1:
 	nat serve --config_file 1_Climate_Agent_Workflow/src/configs/config.yml
 
