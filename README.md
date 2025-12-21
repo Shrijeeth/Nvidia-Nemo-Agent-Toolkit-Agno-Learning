@@ -8,7 +8,7 @@ The material is inspired by NVIDIA & DeepLearning.AI’s curriculum (taught by B
 - **Evaluation & optimization:** run disciplined evals, catch regressions, and tune agents automatically.
 - **Deployment:** package agent workflows as APIs with auth, rate limits, and CI/CD-friendly configs.
 
-Each folder in this repo represents a milestone in that journey, starting with a climate-analysis agent that grows from a single LLM call into a multi-agent, instrumented system.
+Each folder in this repo represents a milestone in that journey, starting with a climate-analysis agent that grows from a single LLM call into a multi-agent, instrumented system; in this snapshot the `1_Climate_Agent_Workflow` now wires five AGNO tools atop the base LLM, ships a bundled `temperature_annual.csv` dataset with helper utilities, exposes visualization commands like `make run_1_5`/`run_1_6`, expands the canned prompts through `make run_1_1 ... run_1_8`, and keeps the familiar NAT ergonomics (`nat validate`, `nat serve`, integration tests) unchanged.
 
 ---
 
@@ -41,11 +41,11 @@ Each folder in this repo represents a milestone in that journey, starting with a
 
 | Folder | Description |
 |--------|-------------|
-| `1_Climate_Agent_Workflow/` | Build & serve a minimal climate agent (LLM-only) |
+| `1_Climate_Agent_Workflow/` | Tool-enabled climate agent (LLM + AGNO tools, dataset, visualizations) |
 | `scripts/` | Utility helpers (env management, etc.) |
 | `Makefile` | Convenience targets: install, validate, run, serve, test |
 
-Future lessons (e.g., `2_Tools_Workflow`, `3_MultiAgent_Workflow`) will incrementally add tool calling, observability plumbing, evaluation suites, optimizers, and UI integrations.
+Future lessons (e.g., `2_Tools_Workflow`, `3_MultiAgent_Workflow`) will continue expanding observability plumbing, evaluation suites, optimizers, and UI integrations.
 
 ---
 
@@ -55,7 +55,14 @@ Future lessons (e.g., `2_Tools_Workflow`, `3_MultiAgent_Workflow`) will incremen
 make install_dependencies   # install uv
 make install_1              # uv editable install of the first workflow
 make validate_1             # nat validate --config_file ...
-make run_1_1                # ask the workflow a curated climate prompt
+make run_1_1                # weather vs climate
+make run_1_2                # global warming delta
+make run_1_3                # tougher numeric question
+make run_1_4                # decade trend analysis
+make run_1_5                # cross-country comparison + visualization
+make run_1_6                # auto top-5 warming countries visualization
+make run_1_7                # decade trend (redundant example)
+make run_1_8                # per-country station + trend summary
 make serve_1                # expose FastAPI on localhost:8000
 make test_api_1             # hit /generate, /chat, /v1/chat/completions and print responses
 ```
@@ -66,7 +73,7 @@ Need to see API output? Run `make serve_1` in one terminal and `make test_api_1`
 
 ## Ready for the next video?
 
-- [Lesson 1 README](1_Climate_Agent_Workflow/README.md): run your first NAT agent and serve it.
-- Upcoming folders: add tools, integrate retrievers, inspect telemetry, plug in evaluators, and connect the official NeMo Agent Toolkit UI.
+- [Lesson 1 README](1_Climate_Agent_Workflow/README.md): run the tool-enabled climate workflow, generate visualizations, and hit the APIs.
+- Upcoming folders: deepen observability, integrate retrievers, wire evaluators, and connect the official NeMo Agent Toolkit UI.
 
 Let’s turn that 60% demo into a production-ready climate assistant.
