@@ -16,7 +16,7 @@ env:
 	@$(MAKE) $(TARGET_SHELL)
 
 env-check:
-	@test -f $(ENV_FILE) || (echo "[env] missing $(ENV_FILE)" >&2; exit 1)
+	$(if $(wildcard $(ENV_FILE)),@:, $(error [env] missing $(ENV_FILE)))
 
 env-posix: env-check
 	@awk -F= 'function ltrim(s){sub(/^[ \t]+/,"",s);return s} \
@@ -31,16 +31,7 @@ env-posix: env-check
 	  printf("export %s=\"%s\"\n", key, val); }' $(ENV_FILE)
 
 env-pwsh: env-check
-	@awk -F= 'function ltrim(s){sub(/^[ \t]+/,"",s);return s} \
-	function rtrim(s){sub(/[ \t]+$$/,"",s);return s} \
-	function trim(s){return rtrim(ltrim(s))} \
-	function clean_key(k){sub(/^export[ \t]+/,"",k);return trim(k)} \
-	function strip_quotes(v){if((v ~ /^".*"$$/) || (v ~ /^'\''.*'\''$$/)) return substr(v,2,length(v)-2);return v} \
-	function escape(v){gsub(/`/,"``",v);gsub(/"/,"`\"",v);return v} \
-	/^[ \t]*#/ || /^[ \t]*$$/ {next} \
-	{ key=clean_key($$1); val=trim(substr($$0, index($$0,"=")+1)); if(!key) next; \
-	  val=escape(strip_quotes(val)); \
-	  printf("$$Env:%s = \"%s\"\n", key, val); }' $(ENV_FILE)
+	@powershell -NoProfile -ExecutionPolicy Bypass -File "$(CURDIR)/scripts/export_env_pwsh.ps1" -EnvFile "$(ENV_FILE)"
 
 env-cmd: env-check
 	@awk -F= 'function ltrim(s){sub(/^[ \t]+/,"",s);return s} \
