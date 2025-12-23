@@ -1,3 +1,11 @@
+general:
+  telemetry:
+    tracing:
+      phoenix:
+        _type: phoenix
+        endpoint: ${PHOENIX_ENDPOINT}
+        project: ${PHOENIX_PROJECT}
+
 llms:
   climate_llm:
     _type: nim

@@ -57,6 +57,14 @@ Ensure `.env` is populated + exported (see root README).
 
 ---
 
+## Observability & Phoenix traces
+
+- `general.telemetry.tracing.phoenix` in `src/configs/config.yml` enables OpenTelemetry export with zero extra code. Set `PHOENIX_ENDPOINT`, `PHOENIX_PROJECT`, and `PHOENIX_API_KEY` in `.env`, then run `make env`.
+- Every `nat run` / `nat serve` emits traces (LLM calls, tool invocations, timing, errors) that show up in your Phoenix project immediately.
+- Use Phoenix’s UI to inspect spans after running `make run_1_*` or the integration tests—this is how we start building Day-2 observability habits even for the simple workflow.
+
+---
+
 ## Hands-on steps
 
 ```bash

@@ -26,7 +26,7 @@ Each folder in this repo represents a milestone in that journey, starting with a
 
 ## Environment setup
 
-1. Copy `.env.example` → `.env` and fill in secrets (`NVIDIA_BASE_URL`, `NVIDIA_API_KEY`, etc.).
+1. Copy `.env.example` → `.env` and fill in secrets (`NVIDIA_BASE_URL`, `NVIDIA_API_KEY`, `PHOENIX_ENDPOINT`, `PHOENIX_PROJECT`, `PHOENIX_API_KEY`, etc.).
 2. Export them using the Make helper:
 
 | Shell | Command |
@@ -68,6 +68,14 @@ make test_api_1             # hit /generate, /chat, /v1/chat/completions and pri
 ```
 
 Need to see API output? Run `make serve_1` in one terminal and `make test_api_1` (or the curl examples in the workflow README) in another. Observability + eval tooling arrives in later lessons when we wire up Phoenix, OpenTelemetry, and NAT evals.
+
+---
+
+## Observability trailheads
+
+- `1_Climate_Agent_Workflow/src/configs/config.yml` already declares a `general.telemetry.tracing.phoenix` block. With the Phoenix env vars exported, every `nat run` / `nat serve` session streams OpenTelemetry traces (tool invocations, latencies, errors) into your Phoenix project.
+- Check the Phoenix UI (under your `${PHOENIX_PROJECT}`) to inspect trace graphs right after running `make run_1_*` or hitting the REST endpoints.
+- Later lessons layer in `nat eval`, `nat optimize`, and additional exporters, but Phoenix gives you immediate visibility today.
 
 ---
 
