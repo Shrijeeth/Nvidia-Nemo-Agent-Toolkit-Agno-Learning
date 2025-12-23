@@ -1,4 +1,5 @@
 import os
+import json
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -16,6 +17,10 @@ from .utils.climate_tools import (
     find_extreme_years,
     create_visualization,
     list_countries
+)
+from .utils.calculator_agent import (
+    create_calculator_agent,
+    calculate_with_agent,
 )
 
 
@@ -68,6 +73,12 @@ class CreateVisualizationInput(BaseModel):
     )
 
 
+class CalculatorInput(BaseModel):
+    question: str = Field(
+        description="A mathematical question or calculation request"
+    )
+
+
 # Config classes for each tool
 class CalculateStatisticsConfig(FunctionBaseConfig, name="calculate_statistics"):
     """Configuration for calculating climate statistics."""
@@ -91,6 +102,10 @@ class FindExtremeYearsConfig(FunctionBaseConfig, name="find_extreme_years"):
 
 class CreateVisualizationConfig(FunctionBaseConfig, name="create_visualization"):
     """Configuration for creating visualizations."""
+    pass
+
+class CalculatorAgentConfig(FunctionBaseConfig, name="calculator_agent"):
+    """Configuration for the mathematical calculator agent."""
     pass
 
 
@@ -205,5 +220,41 @@ async def create_visualization_tool(config: CreateVisualizationConfig, builder: 
             "For 'country_comparison' plot type, it AUTOMATICALLY finds and visualizes the TOP 5 countries "
             "with highest warming trends - no need to calculate trends separately. "
             "Also creates annual temperature trends and monthly patterns using 'annual_trend' and 'monthly_pattern' plot types."
+        )
+    )
+
+
+@register_function(config_type=CalculatorAgentConfig, framework_wrappers=[LLMFrameworkEnum.LANGCHAIN])
+async def calculator_agent_tool(config: CalculatorAgentConfig, builder: Builder):
+    """Register the LangGraph calculator agent as a NAT tool."""
+    
+    # Get the LLM from the builder - lifted from config
+    # Use LANGCHAIN wrapper since we're using LangGraph (built on LangChain)
+    llm = await builder.get_llm("calculator_llm", wrapper_type=LLMFrameworkEnum.LANGCHAIN)
+    # llm = await builder.get_llm("calculator_llm", wrapper_type=LLMFrameworkEnum.LANGCHAIN)
+    
+    # Create the calculator agent with the NAT-provided LLM
+    calculator_agent = create_calculator_agent(llm)
+    
+    async def _wrapper(question: str) -> str:
+        # Use the calculator agent to process the question
+        result = calculate_with_agent(question, calculator_agent)
+        
+        # Format the response as a JSON string
+        response = {
+            "calculation_steps": result["steps"],
+            "final_result": result["final_result"],
+            "explanation": result["explanation"]
+        }
+        return json.dumps(response, indent=2)
+    
+    yield FunctionInfo.from_fn(
+        _wrapper,
+        input_schema=CalculatorInput,
+        description=(
+            "Calculates compound growth rates, percentage changes, weighted averages, "
+            "projections, and multi-step calculations. Shows all calculation steps. "
+            "Does not have access to climate data. If calculations need to be performed on climate data, "
+            "be sure to acquire that data with other tools before including it in the input question to this tool."
         )
     )

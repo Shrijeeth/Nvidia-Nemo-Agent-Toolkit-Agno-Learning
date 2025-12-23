@@ -20,10 +20,12 @@ dependencies = [
     "nvidia-nat[agno]>=1.3.1",
     "nvidia-nat[phoenix]>=1.3.1",
     "nvidia-nat[litellm]>=1.3.1",
+    "nvidia-nat[langchain]>=1.3.1",
     "pandas>=2.1.0",
     "numpy>=1.24.0",
     "matplotlib>=3.7.0",
     "scipy>=1.11.0",
+    "langchain_nvidia_ai_endpoints>=0.3.5"
 ]
 
 [project.entry-points.'nat.components']

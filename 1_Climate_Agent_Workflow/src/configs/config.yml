@@ -15,26 +15,38 @@ llms:
     temperature: 0.3
     max_tokens: 32000
 
+  calculator_llm:
+    _type: nim
+    model_name: moonshotai/kimi-k2-thinking
+    base_url: ${NVIDIA_BASE_URL}
+    api_key: ${NVIDIA_API_KEY}
+    temperature: 0.0
+    max_tokens: 1024
+
 functions:
   list_countries:
     _type: climate_agent/list_countries
     description: "List all available countries in the dataset"
-    
+
   calculate_statistics:
     _type: climate_agent/calculate_statistics
     description: "Calculate temperature statistics globally or for a specific country"
-  
+
   filter_by_country:
     _type: climate_agent/filter_by_country
     description: "Get information about climate data for a specific country"
-  
+
   find_extreme_years:
     _type: climate_agent/find_extreme_years
     description: "Find the warmest or coldest years in the dataset"
-  
+
   create_visualization:
     _type: climate_agent/create_visualization
     description: "Create visualizations including automatic top 5 countries by warming trend (country_comparison plot)"
+
+  calculator_agent:
+    _type: climate_agent/calculator_agent
+    description: "Perform complex mathematical calculations for climate data analysis"
 
 workflow:
   _type: climate_agent/climate_agent
@@ -44,6 +56,7 @@ workflow:
     list_countries,
     filter_by_country,
     find_extreme_years,
-    create_visualization
+    create_visualization,
+    calculator_agent
   ]
   parse_agent_response_max_retries: 3

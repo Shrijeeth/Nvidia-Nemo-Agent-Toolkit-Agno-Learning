@@ -7,8 +7,8 @@ Build a tool-enabled climate agent that combines an AGNO LLM with five structure
 ## Lesson beats
 
 1. **Create a tool-aware workflow**
-   - Author `src/configs/config.yml` with `llms`, reusable tool configs, and the AGNO workflow wiring them together.
-   - Implement `climate_agent_function.py` (conversation orchestration) and `climate_tool_function.py` (statistics, filtering, extremes, visualization).
+   - Author `src/configs/config.yml` with `llms`, reusable tool configs, and the AGNO workflow wiring them together (including a dedicated calculator LLM).
+   - Implement `climate_agent_function.py` (conversation orchestration) and `climate_tool_function.py` (statistics, filtering, extremes, visualization, LangGraph calculator agent).
 
 2. **Ground responses in data**
    - `src/climate_agent/data/temperature_annual.csv` feeds helper utilities in `utils/climate_tools.py`.
@@ -51,8 +51,9 @@ Ensure `.env` is populated + exported (see root README).
 | `pyproject.toml` | Declares package metadata + entry-point so NAT discovers functions |
 | `src/configs/config.yml` | YAML describing LLM, tool configs, and workflow wiring |
 | `src/climate_agent/climate_agent_function.py` | Defines `ClimateAgentFunctionConfig` and wraps the AGNO agent |
-| `src/climate_agent/climate_tool_function.py` | Registers data-grounded tools (stats, filter, extremes, list, visualization) |
+| `src/climate_agent/climate_tool_function.py` | Registers data-grounded tools (stats, filter, extremes, list, visualization, calculator) |
 | `src/climate_agent/utils/climate_tools.py` | Pandas helpers operating on `data/temperature_annual.csv` |
+| `src/climate_agent/utils/calculator_agent.py` | LangGraph-powered multi-step math agent used as a NAT tool |
 | `tests/integration_tests/test_api.py` | Hits REST endpoints and prints raw responses |
 
 ---
@@ -76,6 +77,7 @@ make run_1_5  # cross-country comparison + visualization
 make run_1_6  # auto top-5 warming countries visualization
 make run_1_7  # decade trend (redundant example)
 make run_1_8  # per-country station + trend summary
+make run_1_9  # emissions trajectory scenario (invokes calculator agent)
 make serve_1  # start REST API on localhost:8000
 make test_api_1  # pytest integration hitting /generate, /chat, /v1/chat/completions
 ```

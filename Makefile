@@ -78,6 +78,9 @@ run_1_7:
 run_1_8:
 	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "Tell me about France's climate data. How many stations does it have and what's the temperature trend?"
 
+run_1_9:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "A country's emissions were 1,200 Mt in 2015. They reduced emissions by 2.5% annually until 2020, then accelerated reductions to 4% annually. What are the emissions in 2025?"
+
 serve_1:
 	nat serve --config_file 1_Climate_Agent_Workflow/src/configs/config.yml
 

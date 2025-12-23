@@ -41,7 +41,7 @@ Each folder in this repo represents a milestone in that journey, starting with a
 
 | Folder | Description |
 |--------|-------------|
-| `1_Climate_Agent_Workflow/` | Tool-enabled climate agent (LLM + AGNO tools, dataset, visualizations) |
+| `1_Climate_Agent_Workflow/` | Tool-enabled climate agent (LLM + AGNO tools, LangGraph calculator, dataset, visualizations) |
 | `scripts/` | Utility helpers (env management, etc.) |
 | `Makefile` | Convenience targets: install, validate, run, serve, test |
 
@@ -63,6 +63,7 @@ make run_1_5                # cross-country comparison + visualization
 make run_1_6                # auto top-5 warming countries visualization
 make run_1_7                # decade trend (redundant example)
 make run_1_8                # per-country station + trend summary
+make run_1_9                # emissions scenario needing calculator agent
 make serve_1                # expose FastAPI on localhost:8000
 make test_api_1             # hit /generate, /chat, /v1/chat/completions and print responses
 ```
