@@ -1,4 +1,5 @@
 import os
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -48,7 +49,7 @@ class FindExtremeInput(BaseModel):
 
 
 class CreateVisualizationInput(BaseModel):
-    plot_type: str = Field(
+    plot_type: Literal["annual_trend", "country_comparison", "monthly_pattern"] = Field(
         default="annual_trend",
         description=(
             "Type of plot to create:\n"
@@ -187,7 +188,7 @@ async def create_visualization_tool(config: CreateVisualizationConfig, builder: 
     df = load_climate_data(DATA_PATH)
     
     async def _wrapper(
-        plot_type: str = "annual_trend",
+        plot_type: str,
         country: str = "",
         save_path: str = "climate_plot.png"
     ) -> str:
@@ -203,6 +204,6 @@ async def create_visualization_tool(config: CreateVisualizationConfig, builder: 
             "Create and save climate data visualizations. "
             "For 'country_comparison' plot type, it AUTOMATICALLY finds and visualizes the TOP 5 countries "
             "with highest warming trends - no need to calculate trends separately. "
-            "Also creates annual temperature trends and monthly patterns."
+            "Also creates annual temperature trends and monthly patterns using 'annual_trend' and 'monthly_pattern' plot types."
         )
     )

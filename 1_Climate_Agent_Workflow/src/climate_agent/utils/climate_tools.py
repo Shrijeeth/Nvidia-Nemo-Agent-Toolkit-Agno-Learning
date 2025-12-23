@@ -96,8 +96,8 @@ def filter_by_country(df: pd.DataFrame, country_name: str) -> pd.DataFrame:
     return json.dumps(result, indent=2)
 
 
-def create_visualization(df: pd.DataFrame, 
-                        plot_type: str = "annual_trend",
+def create_visualization(df: pd.DataFrame,
+                        plot_type: str,
                         country: Optional[str] = None,
                         save_path: str = "climate_plot.png") -> str:
     """
