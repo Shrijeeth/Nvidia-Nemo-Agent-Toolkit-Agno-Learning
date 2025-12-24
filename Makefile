@@ -81,6 +81,9 @@ run_1_8:
 run_1_9:
 	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "A country's emissions were 1,200 Mt in 2015. They reduced emissions by 2.5% annually until 2020, then accelerated reductions to 4% annually. What are the emissions in 2025?"
 
+run_1_10:
+	nat run --config_file 1_Climate_Agent_Workflow/src/configs/config.yml --input "If temperature rose from 14.2°C to 15.8°C over 43 years, what's the CAGR?"
+
 serve_1:
 	nat serve --config_file 1_Climate_Agent_Workflow/src/configs/config.yml
 

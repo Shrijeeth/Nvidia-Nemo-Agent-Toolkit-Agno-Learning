@@ -78,6 +78,7 @@ make run_1_6  # auto top-5 warming countries visualization
 make run_1_7  # decade trend (redundant example)
 make run_1_8  # per-country station + trend summary
 make run_1_9  # emissions trajectory scenario (invokes calculator agent)
+make run_1_10 # long-horizon CAGR calculation (calculator agent)
 make serve_1  # start REST API on localhost:8000
 make test_api_1  # pytest integration hitting /generate, /chat, /v1/chat/completions
 ```

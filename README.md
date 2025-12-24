@@ -64,6 +64,7 @@ make run_1_6                # auto top-5 warming countries visualization
 make run_1_7                # decade trend (redundant example)
 make run_1_8                # per-country station + trend summary
 make run_1_9                # emissions scenario needing calculator agent
+make run_1_10               # long-horizon CAGR question (calculator agent)
 make serve_1                # expose FastAPI on localhost:8000
 make test_api_1             # hit /generate, /chat, /v1/chat/completions and print responses
 ```
