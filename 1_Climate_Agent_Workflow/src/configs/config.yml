@@ -9,7 +9,7 @@ general:
 llms:
   climate_llm:
     _type: nim
-    model_name: moonshotai/kimi-k2-thinking
+    model_name: nvidia/llama-3.3-nemotron-super-49b-v1.5
     base_url: ${NVIDIA_BASE_URL}
     api_key: ${NVIDIA_API_KEY}
     temperature: 0.3
@@ -17,7 +17,7 @@ llms:
 
   calculator_llm:
     _type: nim
-    model_name: moonshotai/kimi-k2-thinking
+    model_name: nvidia/llama-3.3-nemotron-super-49b-v1.5
     base_url: ${NVIDIA_BASE_URL}
     api_key: ${NVIDIA_API_KEY}
     temperature: 0.0
@@ -60,3 +60,17 @@ workflow:
     calculator_agent
   ]
   parse_agent_response_max_retries: 3
+
+eval:
+  general:
+    output:
+      dir: ./eval_results
+      cleanup: false
+    dataset:
+      _type: json
+      file_path: 1_Climate_Agent_Workflow/src/climate_agent/data/simple_eval.json
+  evaluators:
+    answer_accuracy:
+      _type: ragas
+      metric: AnswerAccuracy
+      llm_name: climate_llm

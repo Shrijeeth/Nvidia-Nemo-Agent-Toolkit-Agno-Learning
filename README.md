@@ -26,7 +26,7 @@ Each folder in this repo represents a milestone in that journey, starting with a
 
 ## Environment setup
 
-1. Copy `.env.example` → `.env` and fill in secrets (`NVIDIA_BASE_URL`, `NVIDIA_API_KEY`, `PHOENIX_ENDPOINT`, `PHOENIX_PROJECT`, `PHOENIX_API_KEY`, etc.).
+1. Copy `.env.example` → `.env` and fill in secrets (LLM base URL / API key plus `PHOENIX_ENDPOINT`, `PHOENIX_PROJECT`, `PHOENIX_API_KEY`, etc.).
 2. Export them using the Make helper:
 
 | Shell | Command |
@@ -43,7 +43,7 @@ Each folder in this repo represents a milestone in that journey, starting with a
 |--------|-------------|
 | `1_Climate_Agent_Workflow/` | Tool-enabled climate agent (LLM + AGNO tools, LangGraph calculator, dataset, visualizations) |
 | `scripts/` | Utility helpers (env management, etc.) |
-| `Makefile` | Convenience targets: install, validate, run, serve, test |
+| `Makefile` | Convenience targets: install, validate, run, serve, eval, test |
 
 Future lessons (e.g., `2_Tools_Workflow`, `3_MultiAgent_Workflow`) will continue expanding observability plumbing, evaluation suites, optimizers, and UI integrations.
 
@@ -67,7 +67,10 @@ make run_1_9                # emissions scenario needing calculator agent
 make run_1_10               # long-horizon CAGR question (calculator agent)
 make serve_1                # expose FastAPI on localhost:8000
 make test_api_1             # hit /generate, /chat, /v1/chat/completions and print responses
+make eval_1                # run nat eval using simple_eval.json + ragas accuracy
 ```
+
+`make eval_1` reads `1_Climate_Agent_Workflow/src/climate_agent/data/simple_eval.json`, executes the workflow once per row, and stores outputs in `eval_results/*` alongside Ragas AnswerAccuracy scores.
 
 Need to see API output? Run `make serve_1` in one terminal and `make test_api_1` (or the curl examples in the workflow README) in another. Observability + eval tooling arrives in later lessons when we wire up Phoenix, OpenTelemetry, and NAT evals.
 

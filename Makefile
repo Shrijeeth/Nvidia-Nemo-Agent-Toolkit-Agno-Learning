@@ -89,3 +89,6 @@ serve_1:
 
 test_api_1:
 	pytest -s 1_Climate_Agent_Workflow/tests/integration_tests/test_api.py
+
+eval_1:
+	nat eval --config_file 1_Climate_Agent_Workflow/src/configs/config.yml

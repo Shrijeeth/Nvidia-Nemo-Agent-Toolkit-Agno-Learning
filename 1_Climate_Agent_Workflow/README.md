@@ -81,6 +81,7 @@ make run_1_9  # emissions trajectory scenario (invokes calculator agent)
 make run_1_10 # long-horizon CAGR calculation (calculator agent)
 make serve_1  # start REST API on localhost:8000
 make test_api_1  # pytest integration hitting /generate, /chat, /v1/chat/completions
+make eval_1  # nat eval using data/simple_eval.json + Ragas AnswerAccuracy
 ```
 
 While `nat serve` is running you can also hit the endpoints manually:
@@ -98,3 +99,11 @@ curl -X POST http://localhost:8000/v1/chat/completions \
 - Enrich the toolset with external retrievers (NOAA, Copernicus) for fresher data.
 - Introduce `nat optimize` / `nat eval` plus OpenTelemetry traces for observability.
 - Hook up the official NeMo Agent Toolkit UI for a richer chat experience.
+
+---
+
+## Evaluations
+
+- `data/simple_eval.json`: tiny JSONL-style prompt list (currently one Austria question) used by `make eval_1`.
+- `make eval_1` runs `nat eval` against this dataset, stores workflow outputs in `eval_results/workflow_output.json`, and writes Ragas AnswerAccuracy scores to `eval_results/answer_accuracy_output.json`.
+- Update `simple_eval.json` with additional `{"id": ..., "question": ..., "answer": ...}` entries to expand coverage; rerun `make eval_1` to regenerate metrics. Refer to these files when tracking regression fixes or sharing evaluation evidence.
